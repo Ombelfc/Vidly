@@ -26,6 +26,7 @@ else
         <thread>
             <tr>
                 <th>Customer</th>
+                <th>Discout Rate</th>
             </tr>
         </thread>
         <tbody>
@@ -33,6 +34,7 @@ else
             {
                 <tr>
                     <td>@Html.ActionLink(customer.Name, "Details", "Customers", new {id = customer.Id}, null)</td>
+                    <td>@customer.MembershipType.Discout%</td>
                 </tr>
             }
         </tbody>
