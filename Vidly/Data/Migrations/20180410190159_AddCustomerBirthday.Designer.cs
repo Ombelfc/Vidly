@@ -11,9 +11,10 @@ using Vidly.Data;
 namespace Vidly.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180410190159_AddCustomerBirthday")]
+    partial class AddCustomerBirthday
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,17 +202,6 @@ namespace Vidly.Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Vidly.Models.Genre", b =>
-                {
-                    b.Property<byte>("Id");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genre");
-                });
-
             modelBuilder.Entity("Vidly.Models.MembershipType", b =>
                 {
                     b.Property<byte>("Id");
@@ -234,19 +224,9 @@ namespace Vidly.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<byte?>("GenreId");
-
                     b.Property<string>("Name");
 
-                    b.Property<int>("NumberInStock");
-
-                    b.Property<DateTime>("ReleaseDate");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
@@ -302,13 +282,6 @@ namespace Vidly.Data.Migrations
                         .WithMany()
                         .HasForeignKey("MembershipTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Vidly.Models.Movie", b =>
-                {
-                    b.HasOne("Vidly.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
                 });
 #pragma warning restore 612, 618
         }

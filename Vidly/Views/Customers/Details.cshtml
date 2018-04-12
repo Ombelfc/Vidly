@@ -6,4 +6,11 @@
 }
 
 <h2>@Model.Name</h2>
+<ul>
+    <li>@Model.MembershipType.Name</li>
+    @if (Model.Birthday.HasValue)
+    {
+        <li>@Model.Birthday.Value.Date</li>       
+    }
+</ul>
 
