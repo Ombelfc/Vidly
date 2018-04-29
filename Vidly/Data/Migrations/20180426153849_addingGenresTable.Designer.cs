@@ -11,9 +11,10 @@ using Vidly.Data;
 namespace Vidly.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180426153849_addingGenresTable")]
+    partial class addingGenresTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +182,7 @@ namespace Vidly.Data.Migrations
 
             modelBuilder.Entity("Vidly.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("Birthday");
@@ -236,10 +237,9 @@ namespace Vidly.Data.Migrations
 
                     b.Property<DateTime>("DateAdded");
 
-                    b.Property<byte>("GenreId");
+                    b.Property<byte?>("GenreId");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<int>("NumberInStock");
 
@@ -309,8 +309,7 @@ namespace Vidly.Data.Migrations
                 {
                     b.HasOne("Vidly.Models.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("GenreId");
                 });
 #pragma warning restore 612, 618
         }
