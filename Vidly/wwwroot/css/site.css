@@ -33,3 +33,16 @@
         display: none;
     }
 }
+
+/* Validation */
+.field-validation-error {
+    color: red;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 2px solid red;
+}
