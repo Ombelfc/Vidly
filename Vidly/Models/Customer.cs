@@ -19,6 +19,7 @@ namespace Vidly.Models
         public MembershipType MembershipType { get; set; }
 
         [Display(Name = "Membership Type")]
+        // A property of type byte is implicitly required
         public byte MembershipTypeId { get; set; }
 
         [Display(Name = "Date of birth")]

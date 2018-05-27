@@ -44,30 +44,11 @@ namespace Vidly.Controllers
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
 
             return View("CustomerForm", viewModel);
-        }
-
-        [HttpPost]
-        public IActionResult Create(Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new CustomerFormViewModel
-                {
-                    Customer = customer,
-                    MembershipTypes = _context.MembershipTypes.ToList()
-                };
-
-                return View("CustomerForm", viewModel);
-            }
-
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            
-            return RedirectToAction("Index", "Customers");
         }
 
         public IActionResult Edit(int id)
@@ -86,11 +67,34 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Customer customer)
+        [ValidateAntiForgeryToken]
+        public IActionResult Save(Customer customer)
         {
-            var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
 
-            if (customerInDb == null) return NotFound();
+                return View("CustomerForm", viewModel);
+            }
+
+            if(customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                // Single since we'd want it to throw an error
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+
+                customerInDb.Name = customer.Name;
+                customerInDb.Birthday = customer.Birthday;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
 
             // _context.Customers.Update(customerInDb);
             // TryUpdateModelAsync<Customer>(customerInDb); not to be used, opens security holes since it updates all the object's properties.
@@ -98,11 +102,6 @@ namespace Vidly.Controllers
             // Other ways to do the below:
             // 1. Use the AutoMapper library.
             // 2. Use an UpdateCustomerDto with specific properties to update.
-
-            customerInDb.Name = customer.Name;
-            customerInDb.Birthday = customer.Birthday;
-            customerInDb.MembershipTypeId = customer.MembershipTypeId;
-            customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
 
             _context.SaveChanges();
 

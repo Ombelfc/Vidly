@@ -21,7 +21,7 @@ namespace Vidly.Models
 
             return (age > 18) ? 
                 ValidationResult.Success : 
-                new ValidationResult("Customer needs to be at least 18 years old");
+                new ValidationResult("Customer needs to be at least 18 years old for a membership");
         }
     }
 }
