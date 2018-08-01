@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Vidly.Data;
 using Vidly.Models;
 using Vidly.Services;
+using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 namespace Vidly
 {
@@ -36,7 +38,13 @@ namespace Vidly
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            services.AddAutoMapper();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Include;
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
