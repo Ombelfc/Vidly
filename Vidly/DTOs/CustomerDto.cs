@@ -20,6 +20,8 @@ namespace Vidly.DTOs
         // A property of type byte is implicitly required
         public byte MembershipTypeId { get; set; }
 
+        public MembershipTypeDto MembershipType { get; set; }
+
         [Min18YearsIfMember]
         public DateTime? Birthday { get; set; }
     }

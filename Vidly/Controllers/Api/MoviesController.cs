@@ -30,7 +30,7 @@ namespace Vidly.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetMovies()
         {
-            return Ok(_mapper.Map<IEnumerable<MovieDto>>(await _context.Movies.ToListAsync()));
+            return Ok(_mapper.Map<IEnumerable<MovieDto>>(await _context.Movies.Include(m => m.Genre).ToListAsync()));
         }
 
         // GET: api/Movies/5
