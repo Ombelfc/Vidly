@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Vidly.Data;
 using Vidly.Models;
 using Vidly.Models.AccountViewModels;
 using Vidly.Services;
@@ -224,6 +226,12 @@ namespace Vidly.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Temp code
+                    // var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    // var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    // await roleManager.CreateAsync(new IdentityRole("CanManageMovies"));
+                    
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
