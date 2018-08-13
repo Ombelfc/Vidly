@@ -39,6 +39,7 @@ namespace Vidly
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddAutoMapper();
+            
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -64,7 +65,7 @@ namespace Vidly
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
